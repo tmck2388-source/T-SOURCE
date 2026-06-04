@@ -19,10 +19,12 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from ai_core.ollama_client import ollama
 from ai_core.web_search import web_engine
+from ai_core.memory_system import memory
 from features.lyric_generator import LyricGenerator
 from features.code_assistant import CodeAssistant
 from ui.cli_interface import OttaCLI
 from config import APP_NAME, APP_VERSION
+from colorama import Fore, Style
 
 def check_requirements():
     """Check if all dependencies are available"""
@@ -38,14 +40,19 @@ def check_requirements():
 
 def initialize_app():
     """Initialize OttA application"""
-    print(f"Initializing {APP_NAME} v{APP_VERSION}...")
+    print(f"{Fore.CYAN}Initializing {APP_NAME} v{APP_VERSION}...{Style.RESET_ALL}")
     
     # Check Ollama connection
     if ollama.check_connection():
         models = ollama.list_models()
-        print(f"✓ Ollama connected - {len(models)} models available")
+        print(f"{Fore.GREEN}✓ Ollama connected - {len(models)} models available{Style.RESET_ALL}")
     else:
-        print(f"⚠️  Ollama not available - some features may be limited")
+        print(f"{Fore.YELLOW}⚠️  Ollama not available - some features may be limited{Style.RESET_ALL}")
+    
+    # Initialize memory
+    print(f"{Fore.CYAN}Loading memory system...{Style.RESET_ALL}")
+    stats = memory.get_context_stats()
+    print(f"{Fore.GREEN}✓ Memory loaded - {stats['total_saved_conversations']} conversations, {stats['learned_patterns']} patterns{Style.RESET_ALL}")
     
     # Initialize features
     lyric_gen = LyricGenerator(ollama)
@@ -68,28 +75,28 @@ def main():
         command = sys.argv[1].lower()
         
         if command == 'lyrics':
-            print("🎵 Lyric Generation Mode")
+            print(f"{Fore.MAGENTA}🎵 Lyric Generation Mode{Style.RESET_ALL}")
             # Interactive lyric generation
         elif command == 'code':
-            print("💻 Code Assistant Mode")
+            print(f"{Fore.GREEN}💻 Code Assistant Mode{Style.RESET_ALL}")
             # Interactive code assistance
         else:
             print(f"Unknown command: {command}")
             print("Available commands: lyrics, code")
             sys.exit(1)
     else:
-        # Start interactive CLI
-        cli = OttaCLI()
+        # Start interactive CLI with all components
+        cli = OttaCLI(memory=memory, ollama=ollama, web_search=web_engine)
         cli.run()
 
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        print("\n👋 Goodbye!")
+        print(f"\n{Fore.YELLOW}👋 Goodbye!{Style.RESET_ALL}")
         sys.exit(0)
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"{Fore.RED}❌ Error: {e}{Style.RESET_ALL}")
         import traceback
         traceback.print_exc()
         sys.exit(1)
