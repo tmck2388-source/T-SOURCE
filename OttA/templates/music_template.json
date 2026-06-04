@@ -1,0 +1,36 @@
+{
+  "templates": {
+    "rap_verse": {
+      "name": "Rap Verse Template",
+      "style": "rap",
+      "bpm": 90,
+      "bars": 16,
+      "rhyme_scheme": "AABB",
+      "structure": "verse"
+    },
+    "trap_beat": {
+      "name": "Trap Beat Template",
+      "style": "trap",
+      "bpm": 140,
+      "bars": 12,
+      "rhyme_scheme": "AABB",
+      "structure": "verse"
+    },
+    "drill_beat": {
+      "name": "Drill Beat Template",
+      "style": "drill",
+      "bpm": 140,
+      "bars": 16,
+      "rhyme_scheme": "AABBB",
+      "structure": "verse"
+    },
+    "hook_chorus": {
+      "name": "Hook/Chorus Template",
+      "style": "hip_hop",
+      "bpm": 90,
+      "bars": 8,
+      "rhyme_scheme": "ABAB",
+      "structure": "chorus"
+    }
+  }
+}

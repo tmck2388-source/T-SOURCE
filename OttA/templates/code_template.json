@@ -1,0 +1,28 @@
+{
+  "templates": {
+    "web_scraper": {
+      "name": "Web Scraper",
+      "language": "python",
+      "description": "Basic web scraper using requests and BeautifulSoup",
+      "files": ["scraper.py", "requirements.txt", "config.py"]
+    },
+    "flask_api": {
+      "name": "Flask API",
+      "language": "python",
+      "description": "RESTful API using Flask",
+      "files": ["app.py", "routes.py", "models.py", "requirements.txt"]
+    },
+    "cli_tool": {
+      "name": "CLI Tool",
+      "language": "python",
+      "description": "Command-line tool using Click or Typer",
+      "files": ["main.py", "cli.py", "commands.py", "requirements.txt"]
+    },
+    "data_processor": {
+      "name": "Data Processor",
+      "language": "python",
+      "description": "Data processing pipeline using Pandas",
+      "files": ["processor.py", "utils.py", "requirements.txt"]
+    }
+  }
+}
