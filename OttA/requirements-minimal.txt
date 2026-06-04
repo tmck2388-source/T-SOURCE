@@ -1,0 +1,23 @@
+# OttA Requirements - Minimal Dependencies
+# These are all pure Python packages with no C extensions or Rust compilation needed
+
+# Core HTTP/API
+requests==2.31.0
+
+# Web Searching  
+duckduckgo-search==3.9.11
+
+# Terminal Colors & UI
+colorama==0.4.6
+
+# Interactive Prompt/CLI
+prompt-toolkit==3.0.43
+
+# Environment Variables
+python-dotenv==1.0.0
+
+# Async HTTP
+aiohttp==3.9.1
+
+# NOTE: Do NOT use pydantic, pydantic-core, or any packages that depend on them
+# These require Rust compilation which fails on Termux
