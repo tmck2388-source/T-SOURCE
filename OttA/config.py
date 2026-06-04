@@ -19,8 +19,21 @@ for directory in [CONFIG_DIR, TEMPLATES_DIR, DATA_DIR]:
     directory.mkdir(exist_ok=True)
 
 # AI/Model Configuration
-OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
-OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "dolphin-mixtral")  # Unrestricted model
+# Try multiple Ollama paths (Termux, Linux, macOS, Windows)
+OLLAMA_PATHS = [
+    "http://localhost:11434",  # Default
+    os.getenv("OLLAMA_HOST", "http://localhost:11434"),
+    "http://127.0.0.1:11434",
+    "http://0.0.0.0:11434",
+]
+
+# For Termux specifically
+if os.path.exists("/data/data/com.termux"):
+    OLLAMA_PATHS.insert(0, "http://127.0.0.1:11434")
+
+OLLAMA_HOST = os.getenv("OLLAMA_HOST", OLLAMA_PATHS[0])
+# Use mistral or qwen2.5-coder if available, fallback to dolphin
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "mistral")
 USE_LOCAL_OLLAMA = os.getenv("USE_LOCAL_OLLAMA", "True").lower() == "true"
 
 # Web Search Configuration
@@ -63,6 +76,7 @@ class Settings:
                 "model": OLLAMA_MODEL,
                 "language": "en",
                 "auto_learn": True,
+                "ollama_host": OLLAMA_HOST,
             }
             self.save_settings()
     
